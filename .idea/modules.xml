@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/RpcItemParent/Kryo/Kryo.iml" filepath="$PROJECT_DIR$/RpcItemParent/Kryo/Kryo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RpcItemParent/Netty/Netty.iml" filepath="$PROJECT_DIR$/RpcItemParent/Netty/Netty.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RpcItemParent/RpcItem.iml" filepath="$PROJECT_DIR$/RpcItemParent/RpcItem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RpcItemParent/Socket/Socket.iml" filepath="$PROJECT_DIR$/RpcItemParent/Socket/Socket.iml" />
+    </modules>
+  </component>
+</project>

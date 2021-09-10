@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Netty" />
+        <module name="Kryo" />
+        <module name="Socket" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Kryo" target="1.5" />
+      <module name="Netty" target="1.5" />
+      <module name="RpcItem" target="1.5" />
+      <module name="Socket" target="7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
