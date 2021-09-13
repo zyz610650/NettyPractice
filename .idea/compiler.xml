@@ -13,7 +13,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Kryo" target="1.5" />
-      <module name="Netty" target="7" />
+      <module name="Netty" target="8" />
       <module name="RpcItem" target="1.5" />
       <module name="Socket" target="7" />
     </bytecodeTargetLevel>

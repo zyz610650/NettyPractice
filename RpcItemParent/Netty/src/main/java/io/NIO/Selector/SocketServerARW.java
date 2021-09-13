@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
+import java.nio.charset.Charset;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -29,24 +31,52 @@ public class SocketServerARW {
            sscKey.interestOps(SelectionKey.OP_ACCEPT);
            while (true)
            {
+
+               System.out.println("等待连接");
                selector.select();
-               Set<SelectionKey> keys=selector.keys();
-               for (SelectionKey key:keys)
+               Set<SelectionKey> keys = selector.selectedKeys();
+               System.out.println("keys："+keys.size());
+               Iterator<SelectionKey> iter = keys.iterator();
+               while (iter.hasNext())
                {
+                   System.out.println(selector.selectedKeys().size());
+                   SelectionKey key = iter.next();
+                   iter.remove();
+                   System.out.println(key);
+
                    if (key.isAcceptable())
                    {
                        ServerSocketChannel  c= (ServerSocketChannel) key.channel();
                        SocketChannel sc=c.accept();
                        sc.configureBlocking(false);
-                       sc.register(selector,SelectionKey.OP_READ, ByteBuffer.allocate(128));
-                       logger.info("连接已建立： "+sc);
+                       sc.register(selector,SelectionKey.OP_READ+SelectionKey.OP_WRITE, ByteBuffer.allocate(128));
+
+                       System.out.println("连接已建立： "+sc);
+                       // 1. 向客户端发送内容
+                       StringBuilder sb = new StringBuilder();
+//                       sb.append("1111");
+                       for (int i = 0; i < 3000000; i++) {
+                           sb.append("a");
+                       }
+                       ByteBuffer buffer1 = Charset.defaultCharset().encode(sb.toString());
+                       int write = sc.write(buffer1);
+                       // 3. write 表示实际写了多少字节
+                       System.out.println("实际写入字节:" + write);
+                       key.attach(buffer1);
+
                    }
                    if (key.isReadable())
                    {
+                       System.out.println("读事件 "+key);
+
                        SocketChannel sc= (SocketChannel) key.channel();
-                       ByteBuffer buffer= (ByteBuffer) key.attachment();
+                       ByteBuffer buffer= ByteBuffer.allocate(128);
+
                        try {
+
                            int read=sc.read(buffer);
+                           System.out.println("Channel start read!");
+                           System.out.println("读取的字节数： "+read);
                            if (read==-1){//正常关闭
                                key.cancel();
                            }else {
@@ -57,28 +87,39 @@ public class SocketServerARW {
                                    buffer.flip();
                                    newBuffer.put(buffer);
                                    key.attach(buffer);
-                                   logger.error("Channel expand capacity!");
+                                   System.out.println("Channel expand capacity!");
+
                                }
                            }
 
+
                        } catch (IOException e) {
+
                            key.cancel();
                            logger.error("client exception break!");
                        }
 
                    }
-
-                   if (key.isWritable())
+                   else if (key.isWritable())
                    {
+                       System.out.println("写事件"+key);
                        SocketChannel sc= (SocketChannel) key.channel();
                        ByteBuffer buffer= (ByteBuffer) key.attachment();
+
                        int write=sc.write(buffer);
+                       System.out.println(selector.selectedKeys().size());
+
+                       System.out.println();
+                       logger.error("实际发送字节数为:"+write);
+
                        if (!buffer.hasRemaining())
                        {
                            key.interestOps(key.interestOps()-SelectionKey.OP_WRITE);
                            key.attach(null);
                        }
                    }
+
+
                }
            }
 
@@ -102,5 +143,9 @@ public class SocketServerARW {
             ByteBufferUtil.debugRead(target);
         }
         buffer.compact();
+    }
+
+    public static void main(String[] args) {
+        SocketServerARW.start();
     }
 }
