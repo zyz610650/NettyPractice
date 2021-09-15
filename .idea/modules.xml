@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/RpcItemParent/Netty/Netty.iml" filepath="$PROJECT_DIR$/RpcItemParent/Netty/Netty.iml" />
       <module fileurl="file://$PROJECT_DIR$/RpcItemParent/RpcItem.iml" filepath="$PROJECT_DIR$/RpcItemParent/RpcItem.iml" />
       <module fileurl="file://$PROJECT_DIR$/RpcItemParent/Socket/Socket.iml" filepath="$PROJECT_DIR$/RpcItemParent/Socket/Socket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RpcItemParent/netty-demo/netty-demo.iml" filepath="$PROJECT_DIR$/RpcItemParent/netty-demo/netty-demo.iml" />
     </modules>
   </component>
 </project>

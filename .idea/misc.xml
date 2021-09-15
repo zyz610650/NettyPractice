@@ -5,6 +5,7 @@
       <list>
         <option value="$PROJECT_DIR$/Kryo/pom.xml" />
         <option value="$PROJECT_DIR$/RpcItemParent/pom.xml" />
+        <option value="$PROJECT_DIR$/RpcItemParent/netty-demo/pom.xml" />
       </list>
     </option>
   </component>
