@@ -41,7 +41,10 @@ public class GroupSessionMemoryImpl implements GroupSession {
 
     @Override
     public Set<String> getMembers(String name) {
+        //如果没有 Group.EMPTY_GROUP 返回的是null,则调用该方法对返回的set进行遍历时，若set为空
+        //需要进行判断，否则不判断直接遍历的话因为set为Null，直接遍历会报错
         return groupMap.getOrDefault(name, Group.EMPTY_GROUP).getMembers();
+        // getOrDefault 意思就是当Map集合中有这个key时，就使用这个key值，如果没有就使用默认值defaultValue
     }
 
     @Override

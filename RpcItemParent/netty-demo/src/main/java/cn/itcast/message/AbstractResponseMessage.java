@@ -3,6 +3,11 @@ package cn.itcast.message;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 @Data
 @ToString(callSuper = true)
 public abstract class AbstractResponseMessage extends Message {
@@ -10,6 +15,7 @@ public abstract class AbstractResponseMessage extends Message {
     private String reason;
 
     public AbstractResponseMessage() {
+
     }
 
     public AbstractResponseMessage(boolean success, String reason) {

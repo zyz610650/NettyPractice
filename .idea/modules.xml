@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/RpcItemParent/ChatRoom/ChatRoom.iml" filepath="$PROJECT_DIR$/RpcItemParent/ChatRoom/ChatRoom.iml" />
       <module fileurl="file://$PROJECT_DIR$/RpcItemParent/Kryo/Kryo.iml" filepath="$PROJECT_DIR$/RpcItemParent/Kryo/Kryo.iml" />
       <module fileurl="file://$PROJECT_DIR$/RpcItemParent/Netty/Netty.iml" filepath="$PROJECT_DIR$/RpcItemParent/Netty/Netty.iml" />
       <module fileurl="file://$PROJECT_DIR$/RpcItemParent/RpcItem.iml" filepath="$PROJECT_DIR$/RpcItemParent/RpcItem.iml" />

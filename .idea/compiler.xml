@@ -9,11 +9,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Netty" />
         <module name="netty-demo" />
+        <module name="ChatRoom" />
         <module name="Kryo" />
         <module name="Socket" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="ChatRoom" target="8" />
       <module name="Kryo" target="1.5" />
       <module name="Netty" target="8" />
       <module name="netty-demo" target="1.8" />

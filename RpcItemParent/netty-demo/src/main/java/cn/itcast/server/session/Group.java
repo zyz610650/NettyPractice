@@ -14,7 +14,7 @@ public class Group {
     private String name;
     // 聊天室成员
     private Set<String> members;
-
+// Collections.emptySet():  https://www.cnblogs.com/qiumingcheng/p/7126281.html
     public static final Group EMPTY_GROUP = new Group("empty", Collections.emptySet());
 
     public Group(String name, Set<String> members) {

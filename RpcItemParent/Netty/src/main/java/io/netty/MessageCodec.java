@@ -55,11 +55,12 @@ public class MessageCodec extends ByteToMessageCodec<Message> {
         byte messageType = in.readByte();
         int sequenceId = in.readInt();
         in.readByte();
-        int len=in.readByte();
+        int len=in.readInt();
         byte[] bytes=new byte[len];
         in.readBytes(bytes,0,len);
         ObjectInputStream ois=new ObjectInputStream(new ByteArrayInputStream(bytes));
         Message msg= (Message) ois.readObject();
+        log.debug("start");
         log.debug("{}, {}, {}, {}, {}, {}", magicNum, version, serializerType, messageType, sequenceId, len);
         log.debug("{}", msg);
         list.add(msg);//加入是为了给一个handler，要么下一个hadnler拿不到这个message
@@ -72,10 +73,10 @@ public class MessageCodec extends ByteToMessageCodec<Message> {
                 ,new LoggingHandler()
                 ,new MessageCodec());
         LoginRequestMessage message=new LoginRequestMessage("zhangsan","123");
-        // channel.writeAndFlush(message);
-        channel.writeOutbound(message);
-     //   ByteBuf buf= ByteBufAllocator.DEFAULT.buffer();
-        //new MessageCodec().encode(null,message,buf);
-        //channel.writeOutbound(message);
+     // channel.writeAndFlush(message);
+    //channel.writeInbound(message);
+      ByteBuf buf= ByteBufAllocator.DEFAULT.buffer();
+     new MessageCodec().encode(null,message,buf);
+     channel.writeInbound(buf);
     }
 }
