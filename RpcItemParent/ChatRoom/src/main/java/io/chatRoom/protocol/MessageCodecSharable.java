@@ -1,6 +1,7 @@
 package io.chatRoom.protocol;
 
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
+import io.chatRoom.config.Config;
 import io.chatRoom.message.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
@@ -34,10 +35,8 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf,Message>
         out.writeByte(message.getMessageType());
         out.writeInt(message.getSequenceId());
         out.writeByte(0xff);
-        ByteArrayOutputStream bos=new ByteArrayOutputStream();
-        ObjectOutputStream ois=new ObjectOutputStream(bos);
-        ois.writeObject(message);
-        byte[] bytes=bos.toByteArray();
+
+        byte[] bytes=Config.getSerializerAlgorithm().serialize(message);
         out.writeInt(bytes.length);
         out.writeBytes(bytes);
         list.add(out);
@@ -54,8 +53,10 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf,Message>
         int len=in.readInt();
         byte[] bytes=new byte[len];
         in.readBytes(bytes,0,len);
-        ObjectInputStream ois=new ObjectInputStream(new ByteArrayInputStream(bytes));
-        Message message= (Message) ois.readObject();
+
+        Class<?extends Message> clasType=Message.getMessageClass(messageType);
+        Message message = Config.getSerializerAlgorithm().desrialize(clasType,bytes);
+
         log.debug("{}, {}, {}, {}, {}, {}", magicNum, version, serializerType, messageType, sequenceId, len);
         log.debug("{}", message);
         out.add(message);

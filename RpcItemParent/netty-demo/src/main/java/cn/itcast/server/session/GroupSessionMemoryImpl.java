@@ -47,11 +47,15 @@ public class GroupSessionMemoryImpl implements GroupSession {
         // getOrDefault 意思就是当Map集合中有这个key时，就使用这个key值，如果没有就使用默认值defaultValue
     }
 
+    // Stream https://www.runoob.com/java/java8-streams.html
+
+    // ::  https://blog.csdn.net/zhoufanyang_china/article/details/87798829
     @Override
     public List<Channel> getMembersChannel(String name) {
         return getMembers(name).stream()
                 .map(member -> SessionFactory.getSession().getChannel(member))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+
     }
 }

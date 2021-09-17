@@ -1,5 +1,8 @@
 package io.chatRoom.message;
 
+
+
+
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,7 +19,7 @@ import java.util.Map;
 @Data
 public  abstract class Message implements Serializable {
 
-    public static Class<? extends Message> getMessageClass(int messageType) {return null;}
+    public static Class<? extends Message> getMessageClass(int messageType) {return messageClasses.get(messageType);}
 
     private int sequenceId;
     private int messageType;
@@ -40,6 +43,19 @@ public  abstract class Message implements Serializable {
 
     private static final Map<Integer,Class<? extends  Message>> messageClasses=new HashMap<>();
     static {
-        messageClasses.put(LoginRequestMessage, io.chatRoom.message.LoginRequestMessage.class);
+        messageClasses.put(LoginRequestMessage, LoginRequestMessage.class);
+        messageClasses.put(LoginResponseMessage, LoginResponseMessage.class);
+        messageClasses.put(ChatRequestMessage, ChatRequestMessage.class);
+        messageClasses.put(ChatResponseMessage, ChatResponseMessage.class);
+        messageClasses.put(GroupCreateRequestMessage, GroupCreateRequestMessage.class);
+        messageClasses.put(GroupCreateResponseMessage, GroupCreateResponseMessage.class);
+        messageClasses.put(GroupJoinRequestMessage, GroupJoinRequestMessage.class);
+        messageClasses.put(GroupJoinResponseMessage, GroupJoinResponseMessage.class);
+        messageClasses.put(GroupQuitRequestMessage, GroupQuitRequestMessage.class);
+        messageClasses.put(GroupQuitResponseMessage, GroupQuitResponseMessage.class);
+        messageClasses.put(GroupChatRequestMessage, GroupChatRequestMessage.class);
+        messageClasses.put(GroupChatResponseMessage, GroupChatResponseMessage.class);
+        messageClasses.put(GroupMembersRequestMessage, GroupMembersRequestMessage.class);
+        messageClasses.put(GroupMembersResponseMessage, GroupMembersResponseMessage.class);
     }
 }

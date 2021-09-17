@@ -1,6 +1,8 @@
 package io.chatRoom.Server;
 
 import io.chatRoom.Service.UserServiceFactory;
+import io.chatRoom.handler.LoginRequestMessageHandler;
+import io.chatRoom.handler.LoginResponseHandler;
 import io.chatRoom.message.LoginRequestMessage;
 import io.chatRoom.message.LoginResponseMessage;
 import io.chatRoom.protocol.MessageCodecSharable;
@@ -36,6 +38,8 @@ public class ChatServer {
         NioEventLoopGroup boss=new NioEventLoopGroup();
         NioEventLoopGroup workers=new NioEventLoopGroup(2);
         MessageCodecSharable MESSAGE_CODECC=new MessageCodecSharable();
+        LoginResponseHandler LOGIN_RESPONSE=new LoginResponseHandler();
+        LoginRequestMessageHandler LOGIN_MESSAGE_REQUEST=new LoginRequestMessageHandler();
         LoggingHandler LOG_HANDLER=new LoggingHandler(LogLevel.DEBUG);
         try {
         ServerBootstrap bootstrap=new ServerBootstrap()
@@ -46,23 +50,9 @@ public class ChatServer {
                protected void initChannel(SocketChannel ch) throws Exception {
                     ch.pipeline().addLast(new ProcotolFrameDecoder());
                     ch.pipeline().addLast(LOG_HANDLER);
-                   ch.pipeline().addLast(MESSAGE_CODECC);
-                    ch.pipeline().addLast(new SimpleChannelInboundHandler<LoginRequestMessage>() {
-                        @Override
-                        protected void channelRead0(ChannelHandlerContext channelHandlerContext, LoginRequestMessage loginRequestMessage) throws Exception {
-
-                            //验证用户信息
-                            String username=loginRequestMessage.getUsername();
-                            String pwd=loginRequestMessage.getPassword();
-                            boolean login= UserServiceFactory.getUserService().login(username,pwd);
-                            LoginResponseMessage msg;
-                            if (login) msg=new LoginResponseMessage(true,"登陆成功!");
-                            else msg=new LoginResponseMessage(false,"用户名或密码不正确");
-                            log.debug("{}",msg);
-                            channelHandlerContext.writeAndFlush(msg);
-                        }
-
-                    });
+                    ch.pipeline().addLast(MESSAGE_CODECC);
+                    ch.pipeline().addLast(LOGIN_RESPONSE);
+                    ch.pipeline().addLast(LOGIN_MESSAGE_REQUEST);
                }
               });
         Channel channel=bootstrap.bind(7788).sync().channel();

@@ -30,6 +30,12 @@
         <version>1.16.18</version>
     </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.73</version>
+        </dependency>
+
     <dependency>
         <groupId>io.netty</groupId>
         <artifactId>netty-all</artifactId>

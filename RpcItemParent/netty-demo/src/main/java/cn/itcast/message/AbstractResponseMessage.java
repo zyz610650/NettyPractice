@@ -22,4 +22,9 @@ public abstract class AbstractResponseMessage extends Message {
         this.success = success;
         this.reason = reason;
     }
+    public String getResult()
+    {
+        return reason;
+    }
+
 }
