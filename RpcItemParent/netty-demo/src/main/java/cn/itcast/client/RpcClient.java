@@ -33,7 +33,7 @@ public class RpcClient {
                     ch.pipeline().addLast(RPC_HANDLER);
                 }
             });
-            Channel channel = bootstrap.connect("localhost", 8080).sync().channel();
+            Channel channel = bootstrap.connect("localhost", 7878).sync().channel();
 
             ChannelFuture future = channel.writeAndFlush(new RpcRequestMessage(
                     1,

@@ -42,26 +42,31 @@ public class SocketClient {
                     }
                 })
                 .connect(new InetSocketAddress("localhost",7788));
-        Channel channel=channelFuture.sync().channel();
-
-        new Thread(()->{
-            for (int i=0;i<5;i++)
-            {
-                channel.writeAndFlush(i+"");
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            System.out.println("发送数据完毕");
-            channel.close();
-        }).start();
-
-      channel.closeFuture().addListener(future -> {
-          System.out.println("处理关闭后的操作");
+        System.out.println(channelFuture.channel()); // 1
+        channelFuture.sync(); // 2
+        System.out.println(channelFuture.channel()); // 3
+        channelFuture.channel().close();
+        channelFuture.channel().closeFuture().sync();
         group.shutdownGracefully();
-        });
+
+//        new Thread(()->{
+//            for (int i=0;i<5;i++)
+//            {
+//                channel.writeAndFlush(i+"");
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            System.out.println("发送数据完毕");
+//            channel.close();
+//        }).start();
+//
+//      channel.closeFuture().addListener(future -> {
+//          System.out.println("处理关闭后的操作");
+//        group.shutdownGracefully();
+//        });
 
 
 

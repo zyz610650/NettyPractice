@@ -24,7 +24,7 @@ public interface Serializer {
         Java{
             @Override
             public <T> T desrialize(Class<T> clazz, byte[] bytes)  {
-
+                System.out.println("序列化");
                 try {
                     ByteArrayInputStream bis=new ByteArrayInputStream(bytes);
                     ObjectInputStream ois=new ObjectInputStream(bis);
@@ -39,7 +39,7 @@ public interface Serializer {
 
             @Override
             public <T> byte[] serialize(T object) {
-
+                System.out.println("序列化");
                 try {
                     ByteArrayOutputStream bos=new ByteArrayOutputStream();
                     ObjectOutputStream oos=new ObjectOutputStream(bos);
@@ -52,7 +52,7 @@ public interface Serializer {
             }
         },
 
-        JSon{
+        Json{
             @Override
             public <T> T desrialize(Class<T> clazz, byte[] bytes) {
                 return JSON.parseObject(bytes,clazz);

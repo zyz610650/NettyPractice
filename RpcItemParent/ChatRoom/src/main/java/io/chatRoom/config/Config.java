@@ -28,6 +28,7 @@ public abstract class Config {
     public static Serializer.SerializerAlgorithm getSerializerAlgorithm()
     {
         String value=properties.getProperty("serializer.algorithm");
+        System.out.println(value);
         if (value==null) return Serializer.SerializerAlgorithm.Java;
         else return Serializer.SerializerAlgorithm.valueOf(value);
     }

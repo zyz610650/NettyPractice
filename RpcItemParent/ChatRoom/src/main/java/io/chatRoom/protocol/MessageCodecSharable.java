@@ -27,7 +27,8 @@ import java.util.List;
 @ChannelHandler.Sharable
 public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf,Message> {
     @Override
-    protected void encode(ChannelHandlerContext channelHandlerContext, Message message, List<Object> list) throws Exception {
+    protected void encode(ChannelHandlerContext channelHandlerContext, Message message, List<Object> list)  {
+
         ByteBuf out=channelHandlerContext.alloc().buffer();
         out.writeBytes(new byte[]{1,2,3,4});
         out.writeByte(0);
@@ -36,14 +37,20 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf,Message>
         out.writeInt(message.getSequenceId());
         out.writeByte(0xff);
 
-        byte[] bytes=Config.getSerializerAlgorithm().serialize(message);
+        byte[] bytes= new byte[0];
+
+        try {
+            bytes = Config.getSerializerAlgorithm().serialize(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         out.writeInt(bytes.length);
         out.writeBytes(bytes);
         list.add(out);
     }
 
     @Override
-    protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> out) throws Exception {
+    protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> out)  {
         int magicNum = in.readInt();
         byte version = in.readByte();
         byte serializerType = in.readByte();
